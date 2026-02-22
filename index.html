@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3C1053">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CGC Songs">
+    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire & Lyrics Links">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Carrigtwohill Gospel Choir — Repertoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple-deep: #3C1053;
+            --purple-mid: #5B2C6F;
+            --purple-light: #7D3C98;
+            --purple-tint: #F4ECF7;
+            --gold: #D4A017;
+            --gold-light: #F1C40F;
+            --gold-tint: #FEF9E7;
+            --text: #2C2C2C;
+            --text-muted: #8E8E93;
+            --bg: #FAFAFA;
+            --card-bg: #FFFFFF;
+            --shadow: 0 1px 3px rgba(60,16,83,0.08);
+            --shadow-hover: 0 4px 12px rgba(60,16,83,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        /* === HEADER === */
+        .hero {
+            background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-mid) 60%, var(--purple-light) 100%);
+            color: white;
+            padding: 2.5rem 1.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(212,160,23,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(212,160,23,0.08) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 900;
+            font-size: 1.75rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 0.15rem;
+        }
+        .hero h1 span { color: var(--gold); }
+        .hero .subtitle {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .hero .motto {
+            font-size: 0.85rem;
+            opacity: 0.75;
+            font-style: italic;
+        }
+        .gold-bar {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        /* === SEARCH & FILTER === */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--card-bg);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #EEE;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .search-wrap {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+        .search-wrap input {
+            width: 100%;
+            padding: 0.65rem 0.75rem 0.65rem 2.4rem;
+            border: 2px solid #E8E8E8;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: var(--bg);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .search-wrap input:focus {
+            border-color: var(--purple-light);
+            box-shadow: 0 0 0 3px rgba(93,44,111,0.1);
+        }
+        .search-wrap input::placeholder { color: #C0C0C0; }
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .chip {
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1.5px solid #DDD;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .chip:hover { border-color: var(--purple-light); color: var(--purple-mid); }
+        .chip.active {
+            background: var(--purple-deep);
+            color: white;
+            border-color: var(--purple-deep);
+        }
+        .song-count {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* === SONG LIST === */
+        .song-list {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem 3rem;
+        }
+        .song-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 0.75rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.15s, box-shadow 0.15s;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        .song-item:hover, .song-item:active {
+            background: var(--purple-tint);
+            box-shadow: var(--shadow);
+        }
+        .song-item.no-link {
+            cursor: default;
+            opacity: 0.7;
+        }
+        .song-item.no-link:hover { background: transparent; box-shadow: none; }
+        .song-num {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 1.6rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .song-info { flex: 1; min-width: 0; }
+        .song-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--purple-deep);
+            line-height: 1.3;
+        }
+        .song-artist {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+        .song-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            margin-left: 0.4rem;
+            vertical-align: middle;
+        }
+        .badge-local {
+            background: var(--gold-tint);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+        .badge-none {
+            background: #F5F5F5;
+            color: #BBB;
+            border: 1px solid #DDD;
+        }
+        .song-arrow {
+            color: var(--gold);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            opacity: 0.6;
+            transition: opacity 0.15s, transform 0.15s;
+        }
+        .song-item:hover .song-arrow {
+            opacity: 1;
+            transform: translateX(2px);
+        }
+        .song-item.no-link .song-arrow { display: none; }
+
+        /* === EMPTY STATE === */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            display: none;
+        }
+        .empty-state.visible { display: block; }
+        .empty-state .emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 1.5rem 1rem 2rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border-top: 1px solid #EEE;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .footer a { color: var(--purple-light); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .footer .heart { color: var(--gold); }
+
+        /* === INSTALL BANNER === */
+        .install-banner {
+            display: none;
+            background: var(--gold-tint);
+            border: 1.5px solid var(--gold);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 1rem 0;
+            max-width: 668px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--purple-deep);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .install-banner:hover { background: #FCF3CF; }
+        .install-banner strong { color: var(--purple-deep); }
+        .install-banner.visible { display: block; }
+
+        /* === SCROLL TO TOP === */
+        .scroll-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--purple-deep);
+            color: var(--gold);
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 3px 12px rgba(60,16,83,0.3);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-top.visible { opacity: 1; transform: translateY(0); }
+
+        @media (min-width: 768px) {
+            .hero { padding: 3rem 2rem 2.5rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .song-item { padding: 0.9rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Carrigtwohill<br><span>Gospel Choir</span></h1>
+            <p class="subtitle">Song Repertoire</p>
+            <p class="motto">"Sing &amp; let your soul be filled with Joy!"</p>
+        </div>
+    </header>
+    <div class="gold-bar"></div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search" placeholder="Search songs or artists..." autocomplete="off">
+        </div>
+        <div class="filter-chips">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="pop">Pop</button>
+            <button class="chip" data-filter="sacred">Sacred</button>
+            <button class="chip" data-filter="christmas">Christmas</button>
+        </div>
+        <div class="song-count" id="songCount">67 songs</div>
+    </div>
+
+    <div class="install-banner" id="installBanner">
+        📱 <strong>Add to Home Screen</strong> for quick access — works offline too!
+    </div>
+
+    <div class="song-list" id="songList"></div>
+
+    <div class="empty-state" id="emptyState">
+        <div class="emoji">🎵</div>
+        <p>No songs match your search</p>
+    </div>
+
+    <div class="footer">
+        <p>
+            <a href="https://www.facebook.com/CarrigtwohillGospelChoir" target="_blank" rel="noopener">Facebook</a>
+            &nbsp;·&nbsp; Carrigtwohill, Co. Cork
+        </p>
+        <p style="margin-top:0.4rem">
+            <span class="heart">♪</span> Your voice matters — add it to the harmony! <span class="heart">♪</span>
+        </p>
+    </div>
+
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+<script>
+// === SONG DATA ===
+// status: "link" = external lyrics link, "local" = hosted on this site, "none" = no lyrics available
+const songs = [
+    { title: "10,000 Reasons (Bless the Lord)", artist: "Matt Redman", url: "https://genius.com/Matt-Redman-10000-reasons-bless-the-lord-lyrics", cat: "sacred", status: "link" },
+    { title: "A Thousand Years", artist: "Christina Perri", url: "https://genius.com/Christina-Perri-A-Thousand-Years-lyrics", cat: "pop", status: "link" },
+    { title: "Africa", artist: "Toto", url: "https://genius.com/Toto-Africa-lyrics", cat: "pop", status: "link" },
+    { title: "All You Need Is Love", artist: "The Beatles", url: "https://genius.com/The-Beatles-All-You-Need-Is-Love-lyrics", cat: "pop", status: "link" },
+    { title: "Amazing Grace", artist: "Traditional (John Newton)", url: "https://genius.com/John-Newton-Amazing-Grace-lyrics", cat: "sacred", status: "link" },
+    { title: "As", artist: "Stevie Wonder", url: "https://genius.com/Stevie-Wonder-As-lyrics", cat: "pop", status: "link" },
+    { title: "At Last", artist: "Etta James", url: "https://genius.com/Etta-James-At-Last-lyrics", cat: "pop", status: "link" },
+    { title: "Ave Maria", artist: "Beyoncé", url: "https://genius.com/Beyonce-Ave-Maria-lyrics", cat: "sacred", status: "link" },
+    { title: "Because You Loved Me", artist: "Céline Dion", url: "https://genius.com/Celine-Dion-Because-You-Loved-Me-lyrics", cat: "pop", status: "link" },
+    { title: "Broken Vessels (Amazing Grace)", artist: "Hillsong Worship", url: "https://genius.com/Hillsong-Worship-Broken-Vessels-Amazing-Grace-lyrics", cat: "sacred", status: "link" },
+    { title: "Can't Help Falling in Love", artist: "Elvis Presley", url: "https://genius.com/Elvis-Presley-Cant-Help-Falling-In-Love-lyrics", cat: "pop", status: "link" },
+    { title: "Carry Me", artist: "Aoibheann Carey-Philpott", url: "lyrics/carry-me.html", cat: "sacred", status: "local" },
+    { title: "Chapel of Love", artist: "The Dixie Cups", url: "https://genius.com/The-Dixie-Cups-Chapel-of-Love-lyrics", cat: "pop", status: "link" },
+    { title: "Down to the River to Pray", artist: "Traditional Spiritual", url: "https://genius.com/Traditional-Down-to-the-River-to-Pray-lyrics", cat: "sacred", status: "link" },
+    { title: "Dreams", artist: "Fleetwood Mac", url: "https://genius.com/Fleetwood-Mac-Dreams-lyrics", cat: "pop", status: "link" },
+    { title: "Faith of the Heart", artist: "Rod Stewart", url: "https://genius.com/Rod-Stewart-Faith-of-the-Heart-lyrics", cat: "pop", status: "link" },
+    { title: "Feels Like Home", artist: "Randy Newman", url: "https://genius.com/Randy-Newman-Feels-Like-Home-lyrics", cat: "pop", status: "link" },
+    { title: "From This Moment On", artist: "Shania Twain", url: "https://genius.com/Shania-Twain-From-This-Moment-On-lyrics", cat: "pop", status: "link" },
+    { title: "Go Rest High on That Mountain", artist: "Vince Gill", url: "https://genius.com/Vince-Gill-Go-Rest-High-on-That-Mountain-lyrics", cat: "sacred", status: "link" },
+    { title: "God on the Mountain", artist: "Bill & Gloria Gaither", url: "", cat: "sacred", status: "none" },
+    { title: "Hallelujah", artist: "Leonard Cohen", url: "https://genius.com/Leonard-Cohen-Hallelujah-lyrics", cat: "sacred", status: "link" },
+    { title: "Happy", artist: "Pharrell Williams", url: "https://genius.com/Pharrell-Williams-Happy-lyrics", cat: "pop", status: "link" },
+    { title: "Happy Xmas (War Is Over)", artist: "John Lennon", url: "https://genius.com/John-Lennon-Happy-Xmas-War-Is-Over-lyrics", cat: "christmas", status: "link" },
+    { title: "How Great Thou Art", artist: "Traditional (Carl Boberg)", url: "https://genius.com/Traditional-How-Great-Thou-Art-lyrics", cat: "sacred", status: "link" },
+    { title: "I Can See Clearly Now", artist: "Johnny Nash", url: "https://genius.com/Johnny-Nash-I-Can-See-Clearly-Now-lyrics", cat: "pop", status: "link" },
+    { title: "I Still Haven't Found What I'm Looking For", artist: "U2", url: "https://genius.com/U2-I-Still-Havent-Found-What-Im-Looking-For-lyrics", cat: "pop", status: "link" },
+    { title: "I Want to Hold Your Hand", artist: "The Beatles", url: "https://genius.com/The-Beatles-I-Want-to-Hold-Your-Hand-lyrics", cat: "pop", status: "link" },
+    { title: "I Watch the Sunrise", artist: "Liam Lawton", url: "", cat: "sacred", status: "none" },
+    { title: "I Will Follow Him", artist: "Little Peggy March", url: "https://genius.com/Little-Peggy-March-I-Will-Follow-Him-lyrics", cat: "pop", status: "link" },
+    { title: "I'll Fly Away", artist: "Albert E. Brumley", url: "https://genius.com/Albert-E-Brumley-Ill-Fly-Away-lyrics", cat: "sacred", status: "link" },
+    { title: "If the Lord Wasn't Walking by My Side", artist: "Harry Slaughter", url: "", cat: "sacred", status: "none" },
+    { title: "Imagine", artist: "John Lennon", url: "https://genius.com/John-Lennon-Imagine-lyrics", cat: "pop", status: "link" },
+    { title: "In a Country Churchyard", artist: "Chris de Burgh", url: "https://www.chris-de-burgh.co.uk/track/In-A-Country-Churchyard", cat: "pop", status: "link" },
+    { title: "Jar of Hearts", artist: "Christina Perri", url: "https://genius.com/Christina-Perri-Jar-of-Hearts-lyrics", cat: "pop", status: "link" },
+    { title: "Jesus, What a Wonderful Child", artist: "Traditional Gospel", url: "https://genius.com/Traditional-Jesus-What-a-Wonderful-Child-lyrics", cat: "christmas", status: "link" },
+    { title: "Joyful, Joyful, We Adore Thee", artist: "Traditional (Henry van Dyke)", url: "https://genius.com/Traditional-Joyful-Joyful-We-Adore-Thee-lyrics", cat: "sacred", status: "link" },
+    { title: "Lean on Me", artist: "Bill Withers", url: "https://genius.com/Bill-Withers-Lean-on-Me-lyrics", cat: "pop", status: "link" },
+    { title: "Light the Fire Within", artist: "TBC", url: "", cat: "sacred", status: "none" },
+    { title: "Love Can Build a Bridge", artist: "The Judds", url: "https://genius.com/The-Judds-Love-Can-Build-a-Bridge-lyrics", cat: "pop", status: "link" },
+    { title: "Lovely Day", artist: "Bill Withers", url: "https://genius.com/Bill-Withers-Lovely-Day-lyrics", cat: "pop", status: "link" },
+    { title: "Many Rivers to Cross", artist: "Jimmy Cliff", url: "https://genius.com/Jimmy-Cliff-Many-Rivers-to-Cross-lyrics", cat: "pop", status: "link" },
+    { title: "Noel", artist: "Chris Tomlin", url: "https://genius.com/Chris-Tomlin-Noel-lyrics", cat: "christmas", status: "link" },
+    { title: "Now Is the Needed Time", artist: "Traditional Gospel", url: "", cat: "sacred", status: "none" },
+    { title: "O Holy Night", artist: "Traditional (Adolphe Adam)", url: "https://genius.com/Traditional-O-Holy-Night-lyrics", cat: "christmas", status: "link" },
+    { title: "Oh Happy Day", artist: "Edwin Hawkins", url: "https://genius.com/Edwin-Hawkins-Oh-Happy-Day-lyrics", cat: "sacred", status: "link" },
+    { title: "One", artist: "U2", url: "https://genius.com/U2-One-lyrics", cat: "pop", status: "link" },
+    { title: "One and Only", artist: "Adele", url: "https://genius.com/Adele-One-and-Only-lyrics", cat: "pop", status: "link" },
+    { title: "Open the Eyes of My Heart", artist: "Paul Baloche", url: "https://genius.com/Paul-Baloche-Open-the-Eyes-of-My-Heart-lyrics", cat: "sacred", status: "link" },
+    { title: "Signed, Sealed, Delivered (I'm Yours)", artist: "Stevie Wonder", url: "https://genius.com/Stevie-Wonder-Signed-Sealed-Delivered-Im-Yours-lyrics", cat: "pop", status: "link" },
+    { title: "Siyahamba", artist: "Traditional South African", url: "lyrics/siyahamba.html", cat: "sacred", status: "local" },
+    { title: "So Strong", artist: "Labi Siffre", url: "https://genius.com/Labi-Siffre-So-Strong-lyrics", cat: "pop", status: "link" },
+    { title: "Soon and Very Soon", artist: "Andraé Crouch", url: "https://genius.com/Andrae-Crouch-Soon-and-Very-Soon-lyrics", cat: "sacred", status: "link" },
+    { title: "The Little Drummer Boy", artist: "Katherine K. Davis", url: "https://genius.com/Katherine-K-Davis-The-Little-Drummer-Boy-lyrics", cat: "christmas", status: "link" },
+    { title: "The Rose", artist: "Bette Midler", url: "https://genius.com/Bette-Midler-The-Rose-lyrics", cat: "pop", status: "link" },
+    { title: "The Voyage", artist: "Johnny Duhan", url: "https://genius.com/Johnny-Duhan-The-Voyage-lyrics", cat: "pop", status: "link" },
+    { title: "This Little Light of Mine", artist: "Traditional Gospel", url: "https://genius.com/Traditional-This-Little-Light-of-Mine-lyrics", cat: "sacred", status: "link" },
+    { title: "Under the Olive Tree", artist: "Alan O'Brien", url: "lyrics/under-the-olive-tree.html", cat: "pop", status: "local" },
+    { title: "Wade in the Water", artist: "Traditional Spiritual", url: "https://genius.com/Traditional-Wade-in-the-Water-lyrics", cat: "sacred", status: "link" },
+    { title: "Wavin' Flag", artist: "K'naan", url: "https://genius.com/Knaan-Wavin-Flag-lyrics", cat: "pop", status: "link" },
+    { title: "When You Fall at Your Feet", artist: "Crowded House", url: "https://genius.com/Crowded-House-Fall-at-Your-Feet-lyrics", cat: "pop", status: "link" },
+    { title: "White River to Cross", artist: "Jay Miller", url: "", cat: "pop", status: "none" },
+    { title: "Will the Circle Be Unbroken", artist: "Traditional", url: "https://genius.com/Traditional-Will-the-Circle-Be-Unbroken-lyrics", cat: "sacred", status: "link" },
+    { title: "Winter Song", artist: "Sara Bareilles & Ingrid Michaelson", url: "https://genius.com/Sara-Bareilles-and-Ingrid-Michaelson-Winter-Song-lyrics", cat: "christmas", status: "link" },
+    { title: "You Are Not Alone", artist: "Michael Jackson", url: "https://genius.com/Michael-Jackson-You-Are-Not-Alone-lyrics", cat: "pop", status: "link" },
+    { title: "You Raise Me Up", artist: "Josh Groban", url: "https://genius.com/Josh-Groban-You-Raise-Me-Up-lyrics", cat: "pop", status: "link" },
+    { title: "You're in My Heart (The Final Acclaim)", artist: "Rod Stewart", url: "https://genius.com/Rod-Stewart-Youre-in-My-Heart-The-Final-Acclaim-lyrics", cat: "pop", status: "link" },
+    { title: "Your World", artist: "Declan O'Rourke", url: "https://genius.com/Declan-orourke-your-world-lyrics", cat: "pop", status: "link" },
+];
+
+// === RENDER ===
+const songList = document.getElementById('songList');
+const searchInput = document.getElementById('search');
+const songCount = document.getElementById('songCount');
+const emptyState = document.getElementById('emptyState');
+const chips = document.querySelectorAll('.chip');
+let activeFilter = 'all';
+
+function renderSongs() {
+    songList.innerHTML = '';
+    const query = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+
+    songs.forEach((song) => {
+        const matchesFilter = activeFilter === 'all' || song.cat === activeFilter;
+        const matchesSearch = !query ||
+            song.title.toLowerCase().includes(query) ||
+            song.artist.toLowerCase().includes(query);
+
+        if (!matchesFilter || !matchesSearch) return;
+
+        visible++;
+
+        const isLink = song.status === 'link' || song.status === 'local';
+        const tag = isLink ? 'a' : 'div';
+        const el = document.createElement(tag);
+        el.className = 'song-item' + (isLink ? '' : ' no-link');
+
+        if (isLink) {
+            el.href = song.url;
+            if (song.status === 'link') {
+                el.target = '_blank';
+                el.rel = 'noopener';
+            }
+        }
+
+        let badge = '';
+        if (song.status === 'local') {
+            badge = '<span class="song-badge badge-local">Choir</span>';
+        } else if (song.status === 'none') {
+            badge = '<span class="song-badge badge-none">No lyrics yet</span>';
+        }
+
+        el.innerHTML = `
+            <span class="song-num">${visible}</span>
+            <div class="song-info">
+                <div class="song-title">${highlightMatch(song.title, query)}${badge}</div>
+                <div class="song-artist">${highlightMatch(song.artist, query)}</div>
+            </div>
+            <span class="song-arrow">›</span>
+        `;
+        songList.appendChild(el);
+    });
+
+    songCount.textContent = `${visible} song${visible !== 1 ? 's' : ''}`;
+    emptyState.classList.toggle('visible', visible === 0);
+}
+
+function highlightMatch(text, query) {
+    if (!query) return text;
+    const idx = text.toLowerCase().indexOf(query);
+    if (idx === -1) return text;
+    return text.slice(0, idx) +
+        '<mark style="background:rgba(212,160,23,0.25);border-radius:2px;padding:0 1px">' +
+        text.slice(idx, idx + query.length) + '</mark>' +
+        text.slice(idx + query.length);
+}
+
+searchInput.addEventListener('input', renderSongs);
+
+chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter;
+        renderSongs();
+    });
+});
+
+// Scroll to top
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 400);
+});
+scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// === PWA INSTALL ===
+let deferredPrompt;
+const installBanner = document.getElementById('installBanner');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBanner.classList.add('visible');
+});
+
+installBanner.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installBanner.classList.remove('visible');
+    }
+});
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+renderSongs();
+</script>
+
+</body>
+</html>
