@@ -68,7 +68,7 @@ body {
     border: 1px solid #EEE;
     border-radius: 16px;
     box-shadow: var(--shadow);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     padding: 1rem;
 }
 
@@ -84,33 +84,82 @@ body {
     line-height: 1.5;
 }
 
+/* Song groups */
+
 .recordings-list {
     display: grid;
-    gap: 0.85rem;
+    gap: 1.5rem;
+}
+
+.song-group {
+    background: var(--card-bg);
+    border: 1px solid #EFE7F3;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.song-title {
+    background: linear-gradient(135deg, var(--purple-deep), var(--purple-mid));
+    color: white;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.75rem 1rem;
+}
+
+.song-parts {
+    display: grid;
+    gap: 0;
 }
 
 .recording-item {
-    background: var(--card-bg);
-    border: 1px solid #EFE7F3;
-    border-left: 4px solid var(--gold);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    padding: 0.9rem;
+    border-top: 1px solid #F0E8F5;
+    padding: 0.85rem 1rem;
 }
 
-.recording-item:hover { box-shadow: var(--shadow-hover); }
+.recording-item:first-child { border-top: none; }
 
-.recording-title {
-    color: var(--purple-deep);
-    font-weight: 700;
-    line-height: 1.35;
-    margin-bottom: 0.45rem;
-}
-
-.recording-meta {
-    color: var(--text-muted);
-    font-size: 0.8rem;
+.recording-part-row {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
     margin-bottom: 0.6rem;
+}
+
+.part-badge {
+    background: var(--gold-tint);
+    border: 1px solid #E8D08A;
+    border-radius: 20px;
+    color: #7A5A00;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 0.2rem 0.65rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.drive-btn,
+.drive-btn:link,
+.drive-btn:visited {
+    background: var(--purple-tint);
+    border: 1px solid #D9C5E8;
+    border-radius: 20px;
+    color: var(--purple-mid) !important;
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    text-decoration: none !important;
+    white-space: nowrap;
+}
+
+.drive-btn:hover,
+.drive-btn:active {
+    background: var(--purple-mid);
+    color: white !important;
 }
 
 .drive-player {
@@ -120,13 +169,8 @@ body {
     width: 100%;
 }
 
-.recording-error {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
 @media (min-width: 768px) {
     .hero { padding: 2.7rem 2rem 2.25rem; }
     .recordings-page { padding-inline: 1.25rem; }
-    .recording-item { padding: 1.1rem; }
+    .recording-item { padding: 1rem 1.25rem; }
 }
