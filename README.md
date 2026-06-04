@@ -1,6 +1,6 @@
 # 🎵 Carrigtwohill Gospel Choir — Song Repertoire
 
-A mobile-friendly, installable web app with two clear areas: a lyrics section for repertoire links and a separate recordings section for Google Drive practice audio.
+A mobile-friendly, installable web app listing the choir's full song repertoire with one-tap links to lyrics and reusable song pages that can include Google Drive recordings.
 
 **Live site:** `https://YOUR-USERNAME.github.io/cgc-repertoire/`
 
@@ -8,37 +8,61 @@ A mobile-friendly, installable web app with two clear areas: a lyrics section fo
 
 - 🔍 **Search** — Find any song or artist instantly
 - 🏷️ **Filter** — Browse by All, Pop, Sacred, or Christmas
-- 🎧 **Recordings** — A separate recordings section/page keeps practice audio away from lyric pages
+- 🎧 **Recordings** — Local choir song pages include a dedicated recording section with an HTML5 audio player
 - 📱 **PWA** — Install on your phone's home screen for app-like access
 - 📶 **Offline** — The song list and local lyric pages work offline; Google Drive recordings need an internet connection
 - 🎨 **Branded** — Choir's purple & gold colours throughout
 
-## Recordings Page
+## How the Song Pages Work
 
-Recordings live on their own page: `recordings.html`. The home page has two clear sections: **Recordings** links to this audio-only page, and **Lyrics** contains the searchable repertoire list. Choir members click **Recordings** to open a page that contains audio players and no lyrics.
+Local song pages in `lyrics/` use a reusable template:
 
-To add or rename a recording, edit the `recordings` array in `assets/recordings.js`:
+- `assets/song-page.css` keeps the existing purple/gold design responsive.
+- `assets/song-page.js` renders the song title, artist, recording section, lyrics, and permission note.
+- Each `lyrics/*.html` page contains:
+  - a `song-data` JSON block for the song title, artist, permission note, and recording details
+  - a `lyrics-template` block for the lyrics markup
 
-```js
+If a song does not have a recording yet, set `"recording": null`. The page will show: **Recording unavailable for this song.**
+
+## Adding a Recording from Google Drive
+
+1. Upload the audio file to Google Drive.
+2. Right-click the file → **Share**.
+3. Set access to **Anyone with the link can view**.
+4. Copy the file ID from the sharing URL.
+
+A Google Drive sharing URL looks like this:
+
+```text
+https://drive.google.com/file/d/GOOGLE_DRIVE_FILE_ID/view?usp=sharing
+```
+
+Use that ID in the song's JSON block:
+
+```json
 {
-  title: "Song Title — Part or rehearsal note",
-  googleDriveFileId: "GOOGLE_DRIVE_FILE_ID"
+  "title": "Carry Me",
+  "artist": "Aoibheann Carey-Philpott",
+  "permission": "Lyrics by Aoibheann Carey-Philpott · Used with permission",
+  "recording": {
+    "googleDriveFileId": "GOOGLE_DRIVE_FILE_ID",
+    "type": "audio/mpeg",
+    "note": "Practice recording hosted on Google Drive."
+  }
 }
 ```
 
-The site can use either `googleDriveFileId` or a full `shareUrl`; it extracts the Google Drive file ID and converts it into the direct audio URL used by the HTML5 player. Keep `title` clear and singer-friendly because this is the label shown above the mobile audio player. The generated page uses HTML5 `<audio controls preload="metadata">` players, so recordings do **not** autoplay. Each card also includes an **Open this file in Google Drive** fallback link.
+The generated page uses an HTML5 `<audio controls preload="metadata">` player, so recordings do **not** autoplay.
 
-## How the Song Pages Work
+You can also use a direct external audio URL instead of a Google Drive file ID:
 
-Local song pages in `lyrics/` are for lyrics only and use a reusable template:
-
-- `assets/song-page.css` keeps the existing purple/gold design responsive.
-- `assets/song-page.js` renders the song title, artist, lyrics, and permission note.
-- Each `lyrics/*.html` page contains:
-  - a `song-data` JSON block for the song title, artist, and permission note
-  - a `lyrics-template` block for the lyrics markup
-
-Recordings should not be added to lyric pages. Add them to `assets/recordings.js` so they stay on the separate `recordings.html` page.
+```json
+"recording": {
+  "url": "https://example.com/path/to/song.mp3",
+  "type": "audio/mpeg"
+}
+```
 
 ## Adding a New Local Song Page
 
@@ -75,9 +99,6 @@ Go to [github.com](https://github.com) and sign up — it's free.
   - `sw.js`
   - `assets/song-page.css`
   - `assets/song-page.js`
-  - `assets/recordings.css`
-  - `assets/recordings.js`
-  - `recordings.html`
   - `lyrics/` folder
   - `icon-192.png`
   - `icon-512.png`
@@ -95,7 +116,7 @@ Go to [github.com](https://github.com) and sign up — it's free.
 Send the link to the choir WhatsApp group. Members can:
 - Open it in their phone browser
 - Tap "Add to Home Screen" to install it as an app
-- Use the Lyrics section to look up lyrics, or open the separate Recordings section to play Google Drive practice audio at rehearsal
+- Use it to look up lyrics and play available practice recordings at rehearsal
 
 ## How to Update Songs
 
@@ -105,7 +126,7 @@ Edit `index.html` on GitHub — find the `const songs = [...]` array and add/rem
 { title: "Song Name", artist: "Artist", url: "https://genius.com/...", cat: "pop", status: "link" },
 ```
 
-For local choir lyric pages, use `status: "local"` and a `lyrics/...html` URL. Add practice audio separately in `assets/recordings.js`.
+For local choir pages with lyrics and recordings, use `status: "local"` and a `lyrics/...html` URL.
 
 ## Note on Copyright
 

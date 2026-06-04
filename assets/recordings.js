@@ -1,19 +1,19 @@
 const recordings = [
-    { title: "Practice Recording 01", googleDriveFileId: "1DgLcvsOehNV3NxfKYT8eat42xJVWesvu" },
-    { title: "Practice Recording 02", googleDriveFileId: "1pz2_VKu4laSfzlfeE2YyFYxIAyMG0Cpc" },
-    { title: "Practice Recording 03", googleDriveFileId: "1ovQFa46Nnfd82JqyOt15EAu_l7Fvo5fk" },
-    { title: "Practice Recording 04", googleDriveFileId: "1HCU8BALNhu0wmm-o9UX9poDbgng0hxf6" },
-    { title: "Practice Recording 05", googleDriveFileId: "19abbLHNzk2cN6yrTuidwWlIkdAGn3e9i" },
-    { title: "Practice Recording 06", googleDriveFileId: "1YW410TNo__BPUAIrP0ld_i7dDlEKojsG" },
-    { title: "Practice Recording 07", googleDriveFileId: "1HhXjhugZg0-8rGqdpXYeLp_IU83alkUZ" },
-    { title: "Practice Recording 08", googleDriveFileId: "1hMpe0OrRc51lGqxGQDElu7YjDFQC-fKP" },
-    { title: "Practice Recording 09", googleDriveFileId: "1qcSLmXuVwvenMkEQbntbZ9m8EU2gaWNS" },
-    { title: "Practice Recording 10", googleDriveFileId: "1kpStW20A9R71GLPsXaDpFwYsOdA8VRi8" },
-    { title: "Practice Recording 11", googleDriveFileId: "1ljOuXZcsG6NSzN7oSz60IzpbnbMq-1w5" },
-    { title: "Practice Recording 12", googleDriveFileId: "1KTM7fbPO8sovUiZU8Ey9BWyBPXd35ZHh" },
-    { title: "Practice Recording 13", googleDriveFileId: "1Bfz_B_PQ1_v5ZgJ_Njq4OnvoC3ORDnTW" },
-    { title: "Practice Recording 14", googleDriveFileId: "12ttOgvAHDqUCMWsNUTESP9wuBWJs42qt" },
-    { title: "Practice Recording 15", googleDriveFileId: "1BHjyLL9f0MTa_7ZcQGQiyZL2kRzYQomO" },
+    { title: "Choir Recording 01", shareUrl: "https://drive.google.com/file/d/1DgLcvsOehNV3NxfKYT8eat42xJVWesvu/view?usp=sharing" },
+    { title: "Choir Recording 02", shareUrl: "https://drive.google.com/file/d/1pz2_VKu4laSfzlfeE2YyFYxIAyMG0Cpc/view?usp=sharing" },
+    { title: "Choir Recording 03", shareUrl: "https://drive.google.com/file/d/1ovQFa46Nnfd82JqyOt15EAu_l7Fvo5fk/view?usp=sharing" },
+    { title: "Choir Recording 04", shareUrl: "https://drive.google.com/file/d/1HCU8BALNhu0wmm-o9UX9poDbgng0hxf6/view?usp=sharing" },
+    { title: "Choir Recording 05", shareUrl: "https://drive.google.com/file/d/19abbLHNzk2cN6yrTuidwWlIkdAGn3e9i/view?usp=sharing" },
+    { title: "Choir Recording 06", shareUrl: "https://drive.google.com/file/d/1YW410TNo__BPUAIrP0ld_i7dDlEKojsG/view?usp=sharing" },
+    { title: "Choir Recording 07", shareUrl: "https://drive.google.com/file/d/1HhXjhugZg0-8rGqdpXYeLp_IU83alkUZ/view?usp=sharing" },
+    { title: "Choir Recording 08", shareUrl: "https://drive.google.com/file/d/1hMpe0OrRc51lGqxGQDElu7YjDFQC-fKP/view?usp=sharing" },
+    { title: "Choir Recording 09", shareUrl: "https://drive.google.com/file/d/1qcSLmXuVwvenMkEQbntbZ9m8EU2gaWNS/view?usp=sharing" },
+    { title: "Choir Recording 10", shareUrl: "https://drive.google.com/file/d/1kpStW20A9R71GLPsXaDpFwYsOdA8VRi8/view?usp=sharing" },
+    { title: "Choir Recording 11", shareUrl: "https://drive.google.com/file/d/1ljOuXZcsG6NSzN7oSz60IzpbnbMq-1w5/view?usp=sharing" },
+    { title: "Choir Recording 12", shareUrl: "https://drive.google.com/file/d/1KTM7fbPO8sovUiZU8Ey9BWyBPXd35ZHh/view?usp=sharing" },
+    { title: "Choir Recording 13", shareUrl: "https://drive.google.com/file/d/1Bfz_B_PQ1_v5ZgJ_Njq4OnvoC3ORDnTW/view?usp=sharing" },
+    { title: "Choir Recording 14", shareUrl: "https://drive.google.com/file/d/12ttOgvAHDqUCMWsNUTESP9wuBWJs42qt/view?usp=sharing" },
+    { title: "Choir Recording 15", shareUrl: "https://drive.google.com/file/d/1BHjyLL9f0MTa_7ZcQGQiyZL2kRzYQomO/view?usp=sharing" },
 ];
 
 function escapeHtml(value) {
@@ -27,7 +27,7 @@ function escapeHtml(value) {
 
 function getGoogleDriveFileId(value) {
     if (!value) return '';
-    const text = String(value).trim();
+    const text = String(value);
     const filePathMatch = text.match(/\/file\/d\/([^/]+)/);
     if (filePathMatch) return filePathMatch[1];
 
@@ -35,16 +35,12 @@ function getGoogleDriveFileId(value) {
         const url = new URL(text);
         return url.searchParams.get('id') || '';
     } catch {
-        return text;
+        return '';
     }
 }
 
-function getGoogleDriveShareUrl(fileId) {
-    return `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/view?usp=sharing`;
-}
-
 function getPlayableAudioUrl(recording) {
-    const googleDriveFileId = getGoogleDriveFileId(recording.googleDriveFileId || recording.shareUrl || recording.url);
+    const googleDriveFileId = recording.googleDriveFileId || getGoogleDriveFileId(recording.shareUrl || recording.url);
     if (googleDriveFileId) {
         return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(googleDriveFileId)}`;
     }
@@ -57,31 +53,18 @@ function renderRecordings() {
     if (!recordingsList) return;
 
     recordingsList.innerHTML = recordings.map((recording, index) => {
-        const googleDriveFileId = getGoogleDriveFileId(recording.googleDriveFileId || recording.shareUrl || recording.url);
         const audioUrl = getPlayableAudioUrl(recording);
-        const shareUrl = recording.shareUrl || (googleDriveFileId ? getGoogleDriveShareUrl(googleDriveFileId) : audioUrl);
         const typeAttr = recording.type ? ` type="${escapeHtml(recording.type)}"` : '';
         const recordingNumber = String(index + 1).padStart(2, '0');
-
-        if (!audioUrl) {
-            return `
-                <article class="recording-item recording-unavailable">
-                    <div class="recording-title">${escapeHtml(recording.title)}</div>
-                    <div class="recording-meta">Recording ${recordingNumber}</div>
-                    <p class="recording-message">Recording unavailable.</p>
-                </article>
-            `;
-        }
 
         return `
             <article class="recording-item">
                 <div class="recording-title">${escapeHtml(recording.title)}</div>
-                <div class="recording-meta">Recording ${recordingNumber} · Google Drive file ${escapeHtml(googleDriveFileId)}</div>
+                <div class="recording-meta">Recording ${recordingNumber} · Google Drive audio</div>
                 <audio controls preload="metadata" aria-label="Play ${escapeHtml(recording.title)}">
                     <source src="${escapeHtml(audioUrl)}"${typeAttr}>
                     Your browser does not support the HTML5 audio player.
                 </audio>
-                <a class="recording-drive-link" href="${escapeHtml(shareUrl)}" target="_blank" rel="noopener">Open this file in Google Drive</a>
             </article>
         `;
     }).join('');

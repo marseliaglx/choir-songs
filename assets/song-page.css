@@ -59,6 +59,17 @@ body {
     padding: 0 1rem 3rem;
 }
 
+.recording {
+    background: var(--card-bg);
+    border: 1px solid #EEE;
+    border-left: 4px solid var(--gold);
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(60, 16, 83, 0.06);
+    margin: 0.25rem 0 1.5rem;
+    padding: 1rem;
+}
+
+.recording h2,
 .lyrics h2 {
     color: var(--purple);
     font-size: 0.85rem;
@@ -68,6 +79,28 @@ body {
     text-transform: uppercase;
 }
 
+.recording audio {
+    display: block;
+    width: 100%;
+    margin-top: 0.4rem;
+}
+
+.recording-note {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-top: 0.65rem;
+}
+
+.recording-unavailable {
+    background: var(--gold-tint);
+    border: 1px dashed var(--gold);
+    border-radius: 10px;
+    color: var(--purple);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 0.85rem;
+}
 
 .lyrics {
     line-height: 1.85;
@@ -101,4 +134,5 @@ body {
 @media (min-width: 768px) {
     .header { padding: 2rem 1.5rem; }
     .song-page { padding-inline: 1.25rem; }
+    .recording { padding: 1.2rem; }
 }
