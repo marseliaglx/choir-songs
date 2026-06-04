@@ -382,10 +382,35 @@
     </header>
     <div class="gold-bar"></div>
 
-    <div class="controls">
+    <div class="install-banner" id="installBanner">
+        📱 <strong>Add to Home Screen</strong> for quick access — works offline too!
+    </div>
+
+    <main class="home-sections">
+        <section class="section-card recordings-card" aria-labelledby="recordingsSectionHeading">
+            <a class="section-button" href="recordings.html">
+                <span class="section-icon">🎧</span>
+                <span>
+                    <span class="section-button-title" id="recordingsSectionHeading">Recordings</span>
+                    <span class="section-button-text">Go to the separate recordings page and play Google Drive audio files.</span>
+                </span>
+                <span class="section-button-arrow">›</span>
+            </a>
+        </section>
+
+        <section class="section-card lyrics-card" aria-labelledby="lyricsSectionHeading">
+            <div class="section-heading">
+                <span class="section-icon">🎼</span>
+                <h2 id="lyricsSectionHeading">Lyrics</h2>
+            </div>
+            <p class="section-description">Search and open choir lyrics. This section is separate from recordings.</p>
+        </section>
+    </main>
+
+    <div class="controls" aria-label="Lyrics search and filters">
         <div class="search-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="search" placeholder="Search songs or artists..." autocomplete="off">
+            <input type="text" id="search" placeholder="Search lyrics by song or artist..." autocomplete="off">
         </div>
         <div class="filter-chips">
             <button class="chip active" data-filter="all">All</button>
@@ -393,7 +418,7 @@
             <button class="chip" data-filter="sacred">Sacred</button>
             <button class="chip" data-filter="christmas">Christmas</button>
         </div>
-        <div class="song-count" id="songCount">68 songs</div>
+        <div class="song-count" id="songCount">69 lyrics links</div>
     </div>
 
     <div class="install-banner" id="installBanner">
@@ -414,7 +439,7 @@
 
     <div class="empty-state" id="emptyState">
         <div class="emoji">🎵</div>
-        <p>No songs match your search</p>
+        <p>No lyrics match your search</p>
     </div>
 
     <div class="footer">
@@ -448,6 +473,7 @@ const songs = [
     { title: "Chapel of Love", artist: "The Dixie Cups", url: "https://genius.com/The-dixie-cups-chapel-of-love-lyrics", cat: "pop", status: "link" },
     { title: "Down to the River to Pray", artist: "Traditional Spiritual", url: "https://genius.com/Alison-krauss-down-to-the-river-to-pray-lyrics", cat: "sacred", status: "link" },
     { title: "Dreams", artist: "Fleetwood Mac", url: "https://genius.com/Fleetwood-mac-dreams-lyrics", cat: "pop", status: "link" },
+    { title: "Everywhere", artist: "Fleetwood Mac", url: "https://genius.com/Fleetwood-mac-everywhere-lyrics", cat: "pop", status: "link" },
     { title: "Faith of the Heart", artist: "Rod Stewart", url: "https://genius.com/Rod-stewart-faith-of-the-heart-lyrics", cat: "pop", status: "link" },
     { title: "Feels Like Home", artist: "Randy Newman", url: "https://genius.com/Randy-newman-feels-like-home-lyrics", cat: "pop", status: "link" },
     { title: "From This Moment On", artist: "Shania Twain", url: "https://genius.com/Shania-twain-from-this-moment-on-lyrics", cat: "pop", status: "link" },
@@ -629,7 +655,7 @@ function renderSongs() {
         songList.appendChild(el);
     });
 
-    songCount.textContent = `${visible} song${visible !== 1 ? 's' : ''}`;
+    songCount.textContent = `${visible} lyric link${visible !== 1 ? 's' : ''}`;
     emptyState.classList.toggle('visible', visible === 0);
 }
 
