@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cgc-repertoire-v7';
+const CACHE_NAME = 'cgc-repertoire-v5';
 
 self.addEventListener('install', event => {
     event.waitUntil(
@@ -13,9 +13,6 @@ self.addEventListener('install', event => {
                     scope + 'icon-512.png',
                     scope + 'assets/song-page.css',
                     scope + 'assets/song-page.js',
-                    scope + 'assets/recordings.css',
-                    scope + 'assets/recordings.js',
-                    scope + 'recordings.html',
                     scope + 'lyrics/carry-me.html',
                     scope + 'lyrics/under-the-olive-tree.html',
                     scope + 'lyrics/siyahamba.html'
