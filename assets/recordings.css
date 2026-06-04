@@ -113,9 +113,16 @@ body {
     margin-bottom: 0.6rem;
 }
 
-.recording-item audio {
+.drive-player {
+    border: none;
     display: block;
+    height: 60px;
     width: 100%;
+}
+
+.recording-error {
+    color: var(--text-muted);
+    font-size: 0.85rem;
 }
 
 @media (min-width: 768px) {
