@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CGC Songs">
-    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire & Lyrics Links">
+    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire & Separate Recordings">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <title>Carrigtwohill Gospel Choir — Repertoire</title>
@@ -157,6 +157,79 @@
             font-size: 0.78rem;
             color: var(--text-muted);
             margin-top: 0.5rem;
+        }
+
+        /* === HOME SECTIONS === */
+        .home-sections {
+            max-width: 700px;
+            margin: 0.85rem auto 0;
+            padding: 0 1rem;
+        }
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid #EEE;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .section-card.recordings-card {
+            background: linear-gradient(135deg, var(--purple-tint), var(--gold-tint));
+            border-left: 4px solid var(--gold);
+        }
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 1rem 1rem 0.45rem;
+        }
+        .section-heading h2 {
+            color: var(--purple-deep);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.35rem;
+            line-height: 1.15;
+        }
+        .section-icon {
+            font-size: 1.45rem;
+            flex-shrink: 0;
+        }
+        .section-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.45;
+            padding: 0 1rem 1rem;
+        }
+        .section-button {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            color: inherit;
+            padding: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .section-button:hover,
+        .section-button:active {
+            background: rgba(255,255,255,0.55);
+            transform: translateY(-1px);
+        }
+        .section-button-title {
+            color: var(--purple-deep);
+            display: block;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+        .section-button-text {
+            color: var(--text-muted);
+            display: block;
+            font-size: 0.85rem;
+            line-height: 1.35;
+            margin-top: 0.1rem;
+        }
+        .section-button-arrow {
+            color: var(--gold);
+            font-size: 1.4rem;
+            margin-left: auto;
         }
 
         /* === SONG LIST === */
@@ -325,10 +398,35 @@
     </header>
     <div class="gold-bar"></div>
 
-    <div class="controls">
+    <div class="install-banner" id="installBanner">
+        📱 <strong>Add to Home Screen</strong> for quick access — works offline too!
+    </div>
+
+    <main class="home-sections">
+        <section class="section-card recordings-card" aria-labelledby="recordingsSectionHeading">
+            <a class="section-button" href="recordings.html">
+                <span class="section-icon">🎧</span>
+                <span>
+                    <span class="section-button-title" id="recordingsSectionHeading">Recordings</span>
+                    <span class="section-button-text">Go to the separate recordings page and play Google Drive audio files.</span>
+                </span>
+                <span class="section-button-arrow">›</span>
+            </a>
+        </section>
+
+        <section class="section-card lyrics-card" aria-labelledby="lyricsSectionHeading">
+            <div class="section-heading">
+                <span class="section-icon">🎼</span>
+                <h2 id="lyricsSectionHeading">Lyrics</h2>
+            </div>
+            <p class="section-description">Search and open choir lyrics. This section is separate from recordings.</p>
+        </section>
+    </main>
+
+    <div class="controls" aria-label="Lyrics search and filters">
         <div class="search-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="search" placeholder="Search songs or artists..." autocomplete="off">
+            <input type="text" id="search" placeholder="Search lyrics by song or artist..." autocomplete="off">
         </div>
         <div class="filter-chips">
             <button class="chip active" data-filter="all">All</button>
@@ -336,18 +434,14 @@
             <button class="chip" data-filter="sacred">Sacred</button>
             <button class="chip" data-filter="christmas">Christmas</button>
         </div>
-        <div class="song-count" id="songCount">68 songs</div>
+        <div class="song-count" id="songCount">69 lyrics links</div>
     </div>
 
-    <div class="install-banner" id="installBanner">
-        📱 <strong>Add to Home Screen</strong> for quick access — works offline too!
-    </div>
-
-    <div class="song-list" id="songList"></div>
+    <div class="song-list" id="songList" aria-label="Lyrics list"></div>
 
     <div class="empty-state" id="emptyState">
         <div class="emoji">🎵</div>
-        <p>No songs match your search</p>
+        <p>No lyrics match your search</p>
     </div>
 
     <div class="footer">
@@ -364,7 +458,7 @@
 
 <script>
 // === SONG DATA ===
-// status: "link" = external lyrics link, "local" = hosted on this site, "none" = no lyrics available
+// status: "link" = external lyrics link, "local" = hosted lyrics on this site, "none" = no lyrics available
 const songs = [
     { title: "10,000 Reasons (Bless the Lord)", artist: "Matt Redman", url: "https://genius.com/Matt-redman-10000-reasons-bless-the-lord-lyrics", cat: "sacred", status: "link" },
     { title: "A Thousand Years", artist: "Christina Perri", url: "https://genius.com/Christina-perri-a-thousand-years-lyrics", cat: "pop", status: "link" },
@@ -381,6 +475,7 @@ const songs = [
     { title: "Chapel of Love", artist: "The Dixie Cups", url: "https://genius.com/The-dixie-cups-chapel-of-love-lyrics", cat: "pop", status: "link" },
     { title: "Down to the River to Pray", artist: "Traditional Spiritual", url: "https://genius.com/Alison-krauss-down-to-the-river-to-pray-lyrics", cat: "sacred", status: "link" },
     { title: "Dreams", artist: "Fleetwood Mac", url: "https://genius.com/Fleetwood-mac-dreams-lyrics", cat: "pop", status: "link" },
+    { title: "Everywhere", artist: "Fleetwood Mac", url: "https://genius.com/Fleetwood-mac-everywhere-lyrics", cat: "pop", status: "link" },
     { title: "Faith of the Heart", artist: "Rod Stewart", url: "https://genius.com/Rod-stewart-faith-of-the-heart-lyrics", cat: "pop", status: "link" },
     { title: "Feels Like Home", artist: "Randy Newman", url: "https://genius.com/Randy-newman-feels-like-home-lyrics", cat: "pop", status: "link" },
     { title: "From This Moment On", artist: "Shania Twain", url: "https://genius.com/Shania-twain-from-this-moment-on-lyrics", cat: "pop", status: "link" },
@@ -436,6 +531,7 @@ const songs = [
     { title: "Kumbayah", artist: "Traditional", url: "https://genius.com/The-seekers-kumbaya-lyrics", cat: "sacred", status: "link" },
 ];
 
+
 // === RENDER ===
 const songList = document.getElementById('songList');
 const searchInput = document.getElementById('search');
@@ -474,7 +570,7 @@ function renderSongs() {
 
         let badge = '';
         if (song.status === 'local') {
-            badge = '<span class="song-badge badge-local">Choir</span>';
+            badge = '<span class="song-badge badge-local">Choir lyrics</span>';
         } else if (song.status === 'none') {
             badge = '<span class="song-badge badge-none">No lyrics yet</span>';
         }
@@ -490,7 +586,7 @@ function renderSongs() {
         songList.appendChild(el);
     });
 
-    songCount.textContent = `${visible} song${visible !== 1 ? 's' : ''}`;
+    songCount.textContent = `${visible} lyric link${visible !== 1 ? 's' : ''}`;
     emptyState.classList.toggle('visible', visible === 0);
 }
 

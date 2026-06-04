@@ -7,35 +7,21 @@
     <title>Siyahamba — Carrigtwohill Gospel Choir</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root { --purple: #3C1053; --gold: #D4A017; --tint: #F4ECF7; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Source Sans 3', sans-serif; background: #FAFAFA; color: #2C2C2C; -webkit-font-smoothing: antialiased; }
-        .header { background: linear-gradient(135deg, #3C1053, #5B2C6F); color: white; padding: 1.5rem; text-align: center; }
-        .header h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.2rem; }
-        .header .artist { color: var(--gold); font-size: 0.95rem; font-weight: 600; }
-        .gold-bar { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-        .back { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.75rem 1rem; color: var(--purple); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-        .back:hover { text-decoration: underline; }
-        .lyrics { max-width: 600px; margin: 0 auto; padding: 0.5rem 1.5rem 3rem; line-height: 1.85; font-size: 1.05rem; }
-        .lyrics .section { margin: 1.5rem 0 0.5rem; font-weight: 700; color: var(--purple); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .lyrics .verse { margin-bottom: 1.2rem; }
-        .lyrics .line { display: block; }
-        .choir-note { color: var(--gold); font-style: italic; font-size: 0.9rem; }
-        .direction { color: #999; font-style: italic; font-size: 0.9rem; }
-        .permission { text-align: center; font-size: 0.75rem; color: #999; padding: 1rem; border-top: 1px solid #EEE; max-width: 600px; margin: 0 auto; }
-    </style>
+    <link rel="stylesheet" href="../assets/song-page.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Siyahamba</h1>
-        <div class="artist">Traditional South African Hymn</div>
-    </div>
-    <div class="gold-bar"></div>
-    <a class="back" href="../">‹ Back to Repertoire</a>
+    <div id="songPage"></div>
 
-    <div class="lyrics">
-        <div class="section">Verse 1 <span class="direction">— Zulu</span></div>
+    <script type="application/json" id="song-data">
+{
+        "title": "Siyahamba",
+        "artist": "Traditional South African Hymn",
+        "permission": "Traditional South African hymn · Public domain"
+}
+    </script>
+
+    <template id="lyrics-template">
+<div class="section">Verse 1 <span class="direction">— Zulu</span></div>
         <div class="verse">
             <span class="line">Siyahamba ekukhanyeni kwenkos</span>
             <span class="line">Siyahamba ekukhanyeni kwenkos</span>
@@ -89,8 +75,8 @@
             <span class="line">We are singing in the light of God</span>
             <span class="line direction">(repeat)</span>
         </div>
-    </div>
+    </template>
 
-    <div class="permission">Traditional South African hymn · Public domain</div>
+    <script src="../assets/song-page.js"></script>
 </body>
 </html>

@@ -1,0 +1,104 @@
+:root {
+    --purple: #3C1053;
+    --purple-mid: #5B2C6F;
+    --gold: #D4A017;
+    --gold-tint: #FEF9E7;
+    --tint: #F4ECF7;
+    --text: #2C2C2C;
+    --text-muted: #8E8E93;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--purple), var(--purple-mid));
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+    margin-bottom: 0.2rem;
+}
+
+.header .artist {
+    color: var(--gold);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.gold-bar { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.75rem 1rem;
+    color: var(--purple);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.back:hover { text-decoration: underline; }
+
+.song-page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1rem 3rem;
+}
+
+.lyrics h2 {
+    color: var(--purple);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+
+.lyrics {
+    line-height: 1.85;
+    font-size: clamp(1rem, 3.2vw, 1.08rem);
+}
+
+.lyrics .section {
+    margin: 1.5rem 0 0.5rem;
+    font-weight: 700;
+    color: var(--purple);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.lyrics .verse { margin-bottom: 1.2rem; }
+.lyrics .line { display: block; }
+.choir-note { color: var(--gold); font-style: italic; font-size: 0.9rem; }
+.direction { color: #999; font-style: italic; font-size: 0.9rem; }
+
+.permission {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #999;
+    padding: 1rem;
+    border-top: 1px solid #EEE;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .header { padding: 2rem 1.5rem; }
+    .song-page { padding-inline: 1.25rem; }
+}
