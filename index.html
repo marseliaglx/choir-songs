@@ -443,6 +443,7 @@ const songs = [
     { title: "If the Lord Wasn't Walking by My Side", artist: "Elvis Presley", url: "https://genius.com/Elvis-presley-if-the-lord-wasnt-walking-by-my-side-lyrics", cat: "sacred", status: "link" },
     { title: "Imagine", artist: "John Lennon", url: "https://genius.com/John-lennon-imagine-lyrics", cat: "pop", status: "link" },
     { title: "In a Country Churchyard", artist: "Chris de Burgh", url: "https://genius.com/Chris-de-burgh-in-a-country-churchyard-lyrics", cat: "pop", status: "link" },
+    { title: "Iris", artist: "Goo Goo Dolls", url: "https://genius.com/The-goo-goo-dolls-iris-lyrics", cat: "pop", status: "link" },
     { title: "Jar of Hearts", artist: "Christina Perri", url: "https://genius.com/Christina-perri-jar-of-hearts-lyrics", cat: "pop", status: "link" },
     { title: "Jesus, What a Wonderful Child", artist: "Traditional Gospel", url: "https://genius.com/David-phelps-jesus-what-a-wonderful-child-lyrics", cat: "christmas", status: "link" },
     { title: "Joyful, Joyful, We Adore Thee", artist: "Traditional", url: "https://genius.com/Sister-act-2-cast-joyful-joyful-lyrics", cat: "sacred", status: "link" },
@@ -526,9 +527,7 @@ function renderSongs() {
         }
 
         let badge = '';
-        if (song.status === 'local') {
-            badge = '<span class="song-badge badge-local">Lyrics + recording</span>';
-        } else if (song.status === 'none') {
+        if (song.status === 'none') {
             badge = '<span class="song-badge badge-none">No lyrics yet</span>';
         }
 
