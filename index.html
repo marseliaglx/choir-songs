@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CGC Songs">
-    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire & Lyrics Links">
+    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire, Lyrics & Recordings">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <title>Carrigtwohill Gospel Choir — Repertoire</title>
@@ -157,6 +157,63 @@
             font-size: 0.78rem;
             color: var(--text-muted);
             margin-top: 0.5rem;
+        }
+
+
+        /* === RECORDINGS === */
+        .recordings-panel {
+            max-width: 700px;
+            margin: 0.85rem auto 0;
+            padding: 0 1rem;
+        }
+        .recordings-card {
+            background: var(--card-bg);
+            border: 1px solid #EEE;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .recordings-header {
+            background: linear-gradient(135deg, var(--purple-tint), var(--gold-tint));
+            border-bottom: 1px solid #EEE;
+            padding: 1rem;
+        }
+        .recordings-header h2 {
+            color: var(--purple-deep);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.35rem;
+            margin-bottom: 0.2rem;
+        }
+        .recordings-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+        .recordings-list {
+            display: grid;
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .recording-item {
+            border: 1px solid #EFE7F3;
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            padding: 0.85rem;
+        }
+        .recording-title {
+            color: var(--purple-deep);
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 0.45rem;
+        }
+        .recording-meta {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-bottom: 0.55rem;
+        }
+        .recording-item audio {
+            display: block;
+            width: 100%;
         }
 
         /* === SONG LIST === */
@@ -343,6 +400,16 @@
         📱 <strong>Add to Home Screen</strong> for quick access — works offline too!
     </div>
 
+    <section class="recordings-panel" aria-labelledby="recordingsHeading">
+        <div class="recordings-card">
+            <div class="recordings-header">
+                <h2 id="recordingsHeading">Recordings</h2>
+                <p>Practice recordings are hosted on Google Drive and play here with mobile-friendly HTML5 audio controls.</p>
+            </div>
+            <div class="recordings-list" id="recordingsList"></div>
+        </div>
+    </section>
+
     <div class="song-list" id="songList"></div>
 
     <div class="empty-state" id="emptyState">
@@ -364,7 +431,7 @@
 
 <script>
 // === SONG DATA ===
-// status: "link" = external lyrics link, "local" = hosted on this site, "none" = no lyrics available
+// status: "link" = external lyrics link, "local" = hosted on this site with lyrics and recordings, "none" = no lyrics available
 const songs = [
     { title: "10,000 Reasons (Bless the Lord)", artist: "Matt Redman", url: "https://genius.com/Matt-redman-10000-reasons-bless-the-lord-lyrics", cat: "sacred", status: "link" },
     { title: "A Thousand Years", artist: "Christina Perri", url: "https://genius.com/Christina-perri-a-thousand-years-lyrics", cat: "pop", status: "link" },
@@ -436,13 +503,85 @@ const songs = [
     { title: "Kumbayah", artist: "Traditional", url: "https://genius.com/The-seekers-kumbaya-lyrics", cat: "sacred", status: "link" },
 ];
 
+// === RECORDING DATA ===
+// Paste Google Drive sharing links here. They are converted to playable audio URLs automatically.
+const recordings = [
+    { title: "Choir Recording 01", shareUrl: "https://drive.google.com/file/d/1DgLcvsOehNV3NxfKYT8eat42xJVWesvu/view?usp=sharing" },
+    { title: "Choir Recording 02", shareUrl: "https://drive.google.com/file/d/1pz2_VKu4laSfzlfeE2YyFYxIAyMG0Cpc/view?usp=sharing" },
+    { title: "Choir Recording 03", shareUrl: "https://drive.google.com/file/d/1ovQFa46Nnfd82JqyOt15EAu_l7Fvo5fk/view?usp=sharing" },
+    { title: "Choir Recording 04", shareUrl: "https://drive.google.com/file/d/1HCU8BALNhu0wmm-o9UX9poDbgng0hxf6/view?usp=sharing" },
+    { title: "Choir Recording 05", shareUrl: "https://drive.google.com/file/d/19abbLHNzk2cN6yrTuidwWlIkdAGn3e9i/view?usp=sharing" },
+    { title: "Choir Recording 06", shareUrl: "https://drive.google.com/file/d/1YW410TNo__BPUAIrP0ld_i7dDlEKojsG/view?usp=sharing" },
+    { title: "Choir Recording 07", shareUrl: "https://drive.google.com/file/d/1HhXjhugZg0-8rGqdpXYeLp_IU83alkUZ/view?usp=sharing" },
+    { title: "Choir Recording 08", shareUrl: "https://drive.google.com/file/d/1hMpe0OrRc51lGqxGQDElu7YjDFQC-fKP/view?usp=sharing" },
+    { title: "Choir Recording 09", shareUrl: "https://drive.google.com/file/d/1qcSLmXuVwvenMkEQbntbZ9m8EU2gaWNS/view?usp=sharing" },
+    { title: "Choir Recording 10", shareUrl: "https://drive.google.com/file/d/1kpStW20A9R71GLPsXaDpFwYsOdA8VRi8/view?usp=sharing" },
+    { title: "Choir Recording 11", shareUrl: "https://drive.google.com/file/d/1ljOuXZcsG6NSzN7oSz60IzpbnbMq-1w5/view?usp=sharing" },
+    { title: "Choir Recording 12", shareUrl: "https://drive.google.com/file/d/1KTM7fbPO8sovUiZU8Ey9BWyBPXd35ZHh/view?usp=sharing" },
+    { title: "Choir Recording 13", shareUrl: "https://drive.google.com/file/d/1Bfz_B_PQ1_v5ZgJ_Njq4OnvoC3ORDnTW/view?usp=sharing" },
+    { title: "Choir Recording 14", shareUrl: "https://drive.google.com/file/d/12ttOgvAHDqUCMWsNUTESP9wuBWJs42qt/view?usp=sharing" },
+    { title: "Choir Recording 15", shareUrl: "https://drive.google.com/file/d/1BHjyLL9f0MTa_7ZcQGQiyZL2kRzYQomO/view?usp=sharing" },
+];
+
 // === RENDER ===
 const songList = document.getElementById('songList');
 const searchInput = document.getElementById('search');
 const songCount = document.getElementById('songCount');
 const emptyState = document.getElementById('emptyState');
+const recordingsList = document.getElementById('recordingsList');
 const chips = document.querySelectorAll('.chip');
 let activeFilter = 'all';
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function getGoogleDriveFileId(value) {
+    if (!value) return '';
+    const text = String(value);
+    const filePathMatch = text.match(/\/file\/d\/([^/]+)/);
+    if (filePathMatch) return filePathMatch[1];
+
+    try {
+        const url = new URL(text);
+        return url.searchParams.get('id') || '';
+    } catch {
+        return '';
+    }
+}
+
+function getPlayableAudioUrl(recording) {
+    const googleDriveFileId = recording.googleDriveFileId || getGoogleDriveFileId(recording.shareUrl || recording.url);
+    if (googleDriveFileId) {
+        return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(googleDriveFileId)}`;
+    }
+
+    return recording.url || '';
+}
+
+function renderRecordings() {
+    recordingsList.innerHTML = recordings.map((recording, index) => {
+        const audioUrl = getPlayableAudioUrl(recording);
+        const typeAttr = recording.type ? ` type="${escapeHtml(recording.type)}"` : '';
+        const recordingNumber = String(index + 1).padStart(2, '0');
+
+        return `
+            <article class="recording-item">
+                <div class="recording-title">${escapeHtml(recording.title)}</div>
+                <div class="recording-meta">Recording ${recordingNumber} · Google Drive audio</div>
+                <audio controls preload="metadata" aria-label="Play ${escapeHtml(recording.title)}">
+                    <source src="${escapeHtml(audioUrl)}"${typeAttr}>
+                    Your browser does not support the HTML5 audio player.
+                </audio>
+            </article>
+        `;
+    }).join('');
+}
 
 function renderSongs() {
     songList.innerHTML = '';
@@ -474,7 +613,7 @@ function renderSongs() {
 
         let badge = '';
         if (song.status === 'local') {
-            badge = '<span class="song-badge badge-local">Choir</span>';
+            badge = '<span class="song-badge badge-local">Lyrics + recording</span>';
         } else if (song.status === 'none') {
             badge = '<span class="song-badge badge-none">No lyrics yet</span>';
         }
@@ -547,6 +686,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 
+renderRecordings();
 renderSongs();
 </script>
 
