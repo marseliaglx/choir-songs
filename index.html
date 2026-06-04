@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CGC Songs">
-    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire & Lyrics Links">
+    <meta name="description" content="Carrigtwohill Gospel Choir — Song Repertoire & Separate Recordings">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <title>Carrigtwohill Gospel Choir — Repertoire</title>
@@ -157,6 +157,52 @@
             font-size: 0.78rem;
             color: var(--text-muted);
             margin-top: 0.5rem;
+        }
+
+        /* === FEATURE LINKS === */
+        .feature-links {
+            max-width: 700px;
+            margin: 0.85rem auto 0;
+            padding: 0 1rem;
+        }
+        .feature-link {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            background: linear-gradient(135deg, var(--purple-tint), var(--gold-tint));
+            border: 1px solid #EEE;
+            border-left: 4px solid var(--gold);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            color: inherit;
+            padding: 1rem;
+            text-decoration: none;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .feature-link:hover,
+        .feature-link:active {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+        .feature-link-icon {
+            font-size: 1.45rem;
+            flex-shrink: 0;
+        }
+        .feature-link-title {
+            color: var(--purple-deep);
+            font-weight: 700;
+            line-height: 1.25;
+        }
+        .feature-link-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.35;
+            margin-top: 0.1rem;
+        }
+        .feature-link-arrow {
+            color: var(--gold);
+            font-size: 1.4rem;
+            margin-left: auto;
         }
 
         /* === SONG LIST === */
@@ -343,6 +389,17 @@
         📱 <strong>Add to Home Screen</strong> for quick access — works offline too!
     </div>
 
+    <div class="feature-links">
+        <a class="feature-link" href="recordings.html">
+            <span class="feature-link-icon">🎧</span>
+            <span>
+                <span class="feature-link-title">Recordings</span>
+                <span class="feature-link-text">Open the separate recordings page with practice audio players.</span>
+            </span>
+            <span class="feature-link-arrow">›</span>
+        </a>
+    </div>
+
     <div class="song-list" id="songList"></div>
 
     <div class="empty-state" id="emptyState">
@@ -364,7 +421,7 @@
 
 <script>
 // === SONG DATA ===
-// status: "link" = external lyrics link, "local" = hosted on this site, "none" = no lyrics available
+// status: "link" = external lyrics link, "local" = hosted lyrics on this site, "none" = no lyrics available
 const songs = [
     { title: "10,000 Reasons (Bless the Lord)", artist: "Matt Redman", url: "https://genius.com/Matt-redman-10000-reasons-bless-the-lord-lyrics", cat: "sacred", status: "link" },
     { title: "A Thousand Years", artist: "Christina Perri", url: "https://genius.com/Christina-perri-a-thousand-years-lyrics", cat: "pop", status: "link" },
@@ -436,6 +493,7 @@ const songs = [
     { title: "Kumbayah", artist: "Traditional", url: "https://genius.com/The-seekers-kumbaya-lyrics", cat: "sacred", status: "link" },
 ];
 
+
 // === RENDER ===
 const songList = document.getElementById('songList');
 const searchInput = document.getElementById('search');
@@ -474,7 +532,7 @@ function renderSongs() {
 
         let badge = '';
         if (song.status === 'local') {
-            badge = '<span class="song-badge badge-local">Choir</span>';
+            badge = '<span class="song-badge badge-local">Choir lyrics</span>';
         } else if (song.status === 'none') {
             badge = '<span class="song-badge badge-none">No lyrics yet</span>';
         }
