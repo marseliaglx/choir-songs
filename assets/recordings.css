@@ -125,7 +125,6 @@ body {
     align-items: center;
     display: flex;
     gap: 0.75rem;
-    margin-bottom: 0.6rem;
 }
 
 .part-badge {
@@ -162,7 +161,34 @@ body {
     color: white !important;
 }
 
-.drive-player {
+.recording-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.play-btn {
+    background: var(--purple-deep);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    transition: background 0.2s;
+}
+
+.play-btn:hover,
+.play-btn:active {
+    background: var(--purple-mid);
+}
+
+.player-container { width: 100%; }
+.player-container.open { margin-top: 0.6rem; }
+.player-container iframe {
     border: none;
     display: block;
     height: 60px;

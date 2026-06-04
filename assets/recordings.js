@@ -36,8 +36,6 @@ const recordingGroups = [
     },
 ];
 
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
 function escapeHtml(value) {
     return String(value ?? '')
         .replace(/&/g, '&amp;')
@@ -54,6 +52,32 @@ function getGoogleDriveFileId(url) {
     try { return new URL(url).searchParams.get('id') || ''; } catch { return ''; }
 }
 
+let activePlayer = null;
+
+function openPlayer(btn, embedUrl) {
+    const container = btn.closest('.recording-item').querySelector('.player-container');
+
+    // Close if already open
+    if (activePlayer && activePlayer !== container) {
+        activePlayer.innerHTML = '';
+        activePlayer.classList.remove('open');
+        activePlayer.closest('.recording-item').querySelector('.play-btn').textContent = '▶ Play';
+    }
+
+    if (container.classList.contains('open')) {
+        container.innerHTML = '';
+        container.classList.remove('open');
+        btn.textContent = '▶ Play';
+        activePlayer = null;
+    } else {
+        container.innerHTML = `<iframe src="${embedUrl}" allow="autoplay" loading="lazy"></iframe>`;
+        container.classList.add('open');
+        btn.textContent = '■ Close';
+        activePlayer = container;
+        container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
 function renderRecordings() {
     const list = document.getElementById('recordingsList');
     if (!list) return;
@@ -68,12 +92,12 @@ function renderRecordings() {
                 <div class="recording-item">
                     <div class="recording-part-row">
                         <span class="part-badge">${escapeHtml(rec.part)}</span>
-                        ${shareUrl ? `<a class="drive-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Open in Google Drive ↗</a>` : ''}
+                        <div class="recording-actions">
+                            ${embedUrl ? `<button class="play-btn" onclick="openPlayer(this, '${escapeHtml(embedUrl)}')">▶ Play</button>` : ''}
+                            ${shareUrl ? `<a class="drive-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Open in Drive ↗</a>` : ''}
+                        </div>
                     </div>
-                    ${embedUrl && !isIOS
-                        ? `<iframe src="${escapeHtml(embedUrl)}" class="drive-player" allow="autoplay" loading="lazy" title="${escapeHtml(group.song)} – ${escapeHtml(rec.part)}"></iframe>`
-                        : ''
-                    }
+                    <div class="player-container"></div>
                 </div>
             `;
         }).join('');
