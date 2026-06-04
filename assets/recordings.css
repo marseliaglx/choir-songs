@@ -1,0 +1,125 @@
+:root {
+    --purple-deep: #3C1053;
+    --purple-mid: #5B2C6F;
+    --purple-light: #7D3C98;
+    --purple-tint: #F4ECF7;
+    --gold: #D4A017;
+    --gold-tint: #FEF9E7;
+    --text: #2C2C2C;
+    --text-muted: #8E8E93;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --shadow: 0 1px 3px rgba(60,16,83,0.08);
+    --shadow-hover: 0 4px 12px rgba(60,16,83,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-mid) 60%, var(--purple-light) 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.75rem;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.hero p {
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-top: 0.35rem;
+    text-transform: uppercase;
+}
+
+.gold-bar { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+.back {
+    color: var(--purple-deep);
+    display: inline-flex;
+    font-weight: 700;
+    padding: 0.85rem 1rem;
+    text-decoration: none;
+}
+
+.back:hover { text-decoration: underline; }
+
+.recordings-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1rem 3rem;
+}
+
+.recordings-intro {
+    background: linear-gradient(135deg, var(--purple-tint), var(--gold-tint));
+    border: 1px solid #EEE;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.recordings-intro h2 {
+    color: var(--purple-deep);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.recordings-intro p {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.recordings-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.recording-item {
+    background: var(--card-bg);
+    border: 1px solid #EFE7F3;
+    border-left: 4px solid var(--gold);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 0.9rem;
+}
+
+.recording-item:hover { box-shadow: var(--shadow-hover); }
+
+.recording-title {
+    color: var(--purple-deep);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.45rem;
+}
+
+.recording-meta {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+}
+
+.recording-item audio {
+    display: block;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .hero { padding: 2.7rem 2rem 2.25rem; }
+    .recordings-page { padding-inline: 1.25rem; }
+    .recording-item { padding: 1.1rem; }
+}
