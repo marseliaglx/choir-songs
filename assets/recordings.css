@@ -125,6 +125,17 @@ body {
     font-size: 0.85rem;
 }
 
+.drive-link {
+    color: var(--purple-mid);
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    text-decoration: none;
+}
+
+.drive-link:hover { text-decoration: underline; }
+
 @media (min-width: 768px) {
     .hero { padding: 2.7rem 2rem 2.25rem; }
     .recordings-page { padding-inline: 1.25rem; }

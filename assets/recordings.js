@@ -1,8 +1,8 @@
 const recordings = [
-    { title: "Choir Recording 01", shareUrl: "https://drive.google.com/file/d/1DgLcvsOehNV3NxfKYT8eat42xJVWesvu/view?usp=sharing" },
-    { title: "Choir Recording 02", shareUrl: "https://drive.google.com/file/d/1pz2_VKu4laSfzlfeE2YyFYxIAyMG0Cpc/view?usp=sharing" },
-    { title: "Choir Recording 03", shareUrl: "https://drive.google.com/file/d/1ovQFa46Nnfd82JqyOt15EAu_l7Fvo5fk/view?usp=sharing" },
-    { title: "Choir Recording 04", shareUrl: "https://drive.google.com/file/d/1HCU8BALNhu0wmm-o9UX9poDbgng0hxf6/view?usp=sharing" },
+    { title: "Angels Alto", shareUrl: "https://drive.google.com/file/d/1DgLcvsOehNV3NxfKYT8eat42xJVWesvu/view?usp=sharing" },
+    { title: "Angels Full Recording", shareUrl: "https://drive.google.com/file/d/1pz2_VKu4laSfzlfeE2YyFYxIAyMG0Cpc/view?usp=sharing" },
+    { title: "Angels Mezzo", shareUrl: "https://drive.google.com/file/d/1ovQFa46Nnfd82JqyOt15EAu_l7Fvo5fk/view?usp=sharing" },
+    { title: "Angels Soprano", shareUrl: "https://drive.google.com/file/d/1HCU8BALNhu0wmm-o9UX9poDbgng0hxf6/view?usp=sharing" },
     { title: "Choir Recording 05", shareUrl: "https://drive.google.com/file/d/19abbLHNzk2cN6yrTuidwWlIkdAGn3e9i/view?usp=sharing" },
     { title: "Choir Recording 06", shareUrl: "https://drive.google.com/file/d/1YW410TNo__BPUAIrP0ld_i7dDlEKojsG/view?usp=sharing" },
     { title: "Choir Recording 07", shareUrl: "https://drive.google.com/file/d/1HhXjhugZg0-8rGqdpXYeLp_IU83alkUZ/view?usp=sharing" },
@@ -64,14 +64,16 @@ function renderRecordings() {
         const embedUrl = getEmbedUrl(recording);
         const recordingNumber = String(index + 1).padStart(2, '0');
 
+        const shareUrl = escapeHtml(recording.shareUrl || recording.url || '');
         return `
             <article class="recording-item">
                 <div class="recording-title">${escapeHtml(recording.title)}</div>
-                <div class="recording-meta">Recording ${recordingNumber} · Google Drive audio</div>
+                <div class="recording-meta">Google Drive audio</div>
                 ${embedUrl
                     ? `<iframe src="${escapeHtml(embedUrl)}" class="drive-player" allow="autoplay" loading="lazy" title="Play ${escapeHtml(recording.title)}"></iframe>`
                     : `<p class="recording-error">Audio unavailable.</p>`
                 }
+                ${shareUrl ? `<a class="drive-link" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Open in Google Drive ↗</a>` : ''}
             </article>
         `;
     }).join('');
