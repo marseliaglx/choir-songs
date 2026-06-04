@@ -7,29 +7,13 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
-function getGoogleDriveFileId(value) {
-    if (!value) return '';
-    const text = String(value);
-    const filePathMatch = text.match(/\/file\/d\/([^/]+)/);
-    if (filePathMatch) return filePathMatch[1];
-
-    try {
-        const url = new URL(text);
-        return url.searchParams.get('id') || '';
-    } catch {
-        return '';
-    }
-}
-
 function getGoogleDriveAudioUrl(recording) {
     if (!recording) return '';
-
-    const googleDriveFileId = recording.googleDriveFileId || getGoogleDriveFileId(recording.shareUrl || recording.url);
-    if (googleDriveFileId) {
-        return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(googleDriveFileId)}`;
+    if (recording.url) return recording.url;
+    if (recording.googleDriveFileId) {
+        return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(recording.googleDriveFileId)}`;
     }
-
-    return recording.url || '';
+    return '';
 }
 
 function renderRecording(recording) {

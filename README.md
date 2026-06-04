@@ -8,25 +8,10 @@ A mobile-friendly, installable web app listing the choir's full song repertoire 
 
 - 🔍 **Search** — Find any song or artist instantly
 - 🏷️ **Filter** — Browse by All, Pop, Sacred, or Christmas
-- 🎧 **Recordings** — The home page has a mobile-friendly recordings section, and local choir song pages can include their own recording section
+- 🎧 **Recordings** — Local choir song pages include a dedicated recording section with an HTML5 audio player
 - 📱 **PWA** — Install on your phone's home screen for app-like access
 - 📶 **Offline** — The song list and local lyric pages work offline; Google Drive recordings need an internet connection
 - 🎨 **Branded** — Choir's purple & gold colours throughout
-
-## Home Page Recordings
-
-The home page has a **Recordings** section above the song list. Edit the `recordings` array in `index.html` to add or rename a playable recording card:
-
-```js
-{
-  title: "Song Title — Part or rehearsal note",
-  shareUrl: "https://drive.google.com/file/d/GOOGLE_DRIVE_FILE_ID/view?usp=sharing",
-  // type is optional; omit it if you are not sure of the audio format
-  type: "audio/mpeg"
-}
-```
-
-The site extracts the Google Drive file ID and converts the sharing link into a playable URL automatically. Keep `title` clear and singer-friendly because this is the label shown above the mobile audio player.
 
 ## How the Song Pages Work
 
@@ -45,7 +30,7 @@ If a song does not have a recording yet, set `"recording": null`. The page will 
 1. Upload the audio file to Google Drive.
 2. Right-click the file → **Share**.
 3. Set access to **Anyone with the link can view**.
-4. Copy the sharing URL. You can paste the full Google Drive link into `shareUrl`; the site extracts the file ID automatically.
+4. Copy the file ID from the sharing URL.
 
 A Google Drive sharing URL looks like this:
 
@@ -53,7 +38,7 @@ A Google Drive sharing URL looks like this:
 https://drive.google.com/file/d/GOOGLE_DRIVE_FILE_ID/view?usp=sharing
 ```
 
-Use the full sharing link in the song's JSON block:
+Use that ID in the song's JSON block:
 
 ```json
 {
@@ -61,7 +46,7 @@ Use the full sharing link in the song's JSON block:
   "artist": "Aoibheann Carey-Philpott",
   "permission": "Lyrics by Aoibheann Carey-Philpott · Used with permission",
   "recording": {
-    "shareUrl": "https://drive.google.com/file/d/GOOGLE_DRIVE_FILE_ID/view?usp=sharing",
+    "googleDriveFileId": "GOOGLE_DRIVE_FILE_ID",
     "type": "audio/mpeg",
     "note": "Practice recording hosted on Google Drive."
   }
@@ -70,7 +55,7 @@ Use the full sharing link in the song's JSON block:
 
 The generated page uses an HTML5 `<audio controls preload="metadata">` player, so recordings do **not** autoplay.
 
-You can also use a direct external audio URL instead of a Google Drive sharing link:
+You can also use a direct external audio URL instead of a Google Drive file ID:
 
 ```json
 "recording": {

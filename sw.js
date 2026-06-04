@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cgc-repertoire-v6';
+const CACHE_NAME = 'cgc-repertoire-v5';
 
 self.addEventListener('install', event => {
     event.waitUntil(
