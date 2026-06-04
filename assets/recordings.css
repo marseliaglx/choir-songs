@@ -141,21 +141,25 @@ body {
     white-space: nowrap;
 }
 
-.drive-btn {
+.drive-btn,
+.drive-btn:link,
+.drive-btn:visited {
     background: var(--purple-tint);
     border: 1px solid #D9C5E8;
     border-radius: 20px;
-    color: var(--purple-mid);
+    color: var(--purple-mid) !important;
+    display: inline-block;
     font-size: 0.78rem;
     font-weight: 700;
-    padding: 0.2rem 0.65rem;
-    text-decoration: none;
+    padding: 0.25rem 0.75rem;
+    text-decoration: none !important;
     white-space: nowrap;
 }
 
-.drive-btn:hover {
+.drive-btn:hover,
+.drive-btn:active {
     background: var(--purple-mid);
-    color: white;
+    color: white !important;
 }
 
 .drive-player {
