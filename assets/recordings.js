@@ -48,23 +48,30 @@ function getPlayableAudioUrl(recording) {
     return recording.url || '';
 }
 
+function getEmbedUrl(recording) {
+    const fileId = recording.googleDriveFileId || getGoogleDriveFileId(recording.shareUrl || recording.url || '');
+    if (fileId) {
+        return `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview`;
+    }
+    return '';
+}
+
 function renderRecordings() {
     const recordingsList = document.getElementById('recordingsList');
     if (!recordingsList) return;
 
     recordingsList.innerHTML = recordings.map((recording, index) => {
-        const audioUrl = getPlayableAudioUrl(recording);
-        const typeAttr = recording.type ? ` type="${escapeHtml(recording.type)}"` : '';
+        const embedUrl = getEmbedUrl(recording);
         const recordingNumber = String(index + 1).padStart(2, '0');
 
         return `
             <article class="recording-item">
                 <div class="recording-title">${escapeHtml(recording.title)}</div>
                 <div class="recording-meta">Recording ${recordingNumber} · Google Drive audio</div>
-                <audio controls preload="metadata" aria-label="Play ${escapeHtml(recording.title)}">
-                    <source src="${escapeHtml(audioUrl)}"${typeAttr}>
-                    Your browser does not support the HTML5 audio player.
-                </audio>
+                ${embedUrl
+                    ? `<iframe src="${escapeHtml(embedUrl)}" class="drive-player" allow="autoplay" loading="lazy" title="Play ${escapeHtml(recording.title)}"></iframe>`
+                    : `<p class="recording-error">Audio unavailable.</p>`
+                }
             </article>
         `;
     }).join('');
